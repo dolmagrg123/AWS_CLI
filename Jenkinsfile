@@ -20,11 +20,11 @@ pipeline {
             }
         }
 	stage ('Deploy') {
-          steps {
-              sh '''#!/bin/bash
-              source venv/bin/activate
-              eb create dev --single
-              '''
+            steps {
+                sh '''#!/bin/bash
+                source venv/bin/activate
+                eb create dev --single
+                '''
           }
       }
     }
