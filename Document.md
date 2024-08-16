@@ -65,6 +65,9 @@ The Jenkins throws error if not setup properly. Make sure to validate the GitHub
 
 6. Back in the Jenkins Server Terminal- Install AWS CLI on the Jenkins Server with the following commands:
 
+Download unzip:
+![unzip](images/unzip%20install.png)
+
 ```
 $curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 $unzip awscliv2.zip
@@ -97,13 +100,19 @@ cd workspace/[name-of-multibranch-pipeline]
 
 you should be able to see the application source code from this directory
 
+![Application source code](images/jenkins_source_code.png)
+
 9. Activate the Python Virtual Environment
 
 ```
 source venv/bin/activate
 ```
-NOTE: Python Virtual Environments are usually created by running the command `python3 -m venv [name-of-environment]`.  What is a virtual environment? Why is it important/necessary? and when was this one (venv) created? HINT: See step 13 below.
+NOTE: Python Virtual Environments are usually created by running the command `python3 -m venv [name-of-environment]`.  
+What is a virtual environment? Why is it important/necessary? and when was this one (venv) created?
 
+## Virtual Environment
+
+Virtual Environment allows you to create isolated environments for different projects ensuring that dependencies and packages used for one project do not interfere with those used for another. We created virtual environment in our Build stage when we ran our pipeline for the first time.
 
 10. Install AWS EB CLI on the Jenkins Server with the following commands:
 
@@ -112,6 +121,7 @@ $pip install awsebcli
 $eb --version
 ```
 If AWS EB CLI was installed properly the version number will output to the terminal
+![EB CLI](images/eb_CLI.png)
 
 11. Configure AWS CLI with the folling command:
 
@@ -139,6 +149,7 @@ $aws ec2 describe-instances
   ```
   eb init
   ```
+  eb init is a command used with the AWS Elastic Beanstalk Command Line Interface (EB CLI). It initializes a new Elastic Beanstalk application or configures an existing one for use with the EB CLI. Elastic Beanstalk is a platform as a service (PaaS) that makes it easy to deploy, manage, and scale web applications and services.
   
    b. Set the default region to: us-east-1
 
@@ -166,14 +177,19 @@ $aws ec2 describe-instances
             }
         }
   ```
-IMPORTANT: THE SYNTAX OF THE JENKINSFILE IS VERY SPECIFIC! MAKE SURE THAT THE STAGES AND CURLY BRACKETS ARE IN THE CORRECT ORDER OTHERWISE THE PIPELINE WILL NOT BUILD!
-See https://www.jenkins.io/doc/book/pipeline/syntax/ for more information.
+
+  For the environment name, make sure it is atleast 4 characters
+  ![env name error](images/env_name_error.png)
+
+https://www.jenkins.io/doc/book/pipeline/syntax/ for Jenkins Syntax
 
   c. Push these changes to the GH Repository
 
 14. Navigate back to the Jenkins Console and build the pipeline again.
 
 If the pipeline sucessfully completes, navigate to AWS Elastic Beanstalk in the AWS Console and check for the environment that is created. The application should be running at the domain created by Elastic Beanstalk.
+![pipeline final run](images/pipeline_final_run.png)
+![Output Final](images/pipeline_output_final.png)
 
 15. Document! All projects have documentation so that others can read and understand what was done and how it was done. Create a README.md file in your repository that describes:
 
@@ -188,15 +204,6 @@ If the pipeline sucessfully completes, navigate to AWS Elastic Beanstalk in the 
   	e. An "OPTIMIZATION" section for that answers the question: How is using a deploy stage in the CICD pipeline able to increase efficiency of the buisiness?  What issues, if any, can you think of that might come with automating source code to a production environment? How would you address/resolve this?
 
     f. A "CONCLUSION" statement as well as any other sections you feel like you want to include.
-
-
-
-
-
-
-
-
-
 
 
 ### "SYSTEM DESIGN DIAGRAM"
