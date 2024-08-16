@@ -208,7 +208,7 @@ If the pipeline sucessfully completes, navigate to AWS Elastic Beanstalk in the 
 
 
 ### "SYSTEM DESIGN DIAGRAM"
-![Design](images/system_design.png)
+![Design](images/Workload_2.png)
     
 ### "ISSUES/TROUBLESHOOTING"
 
