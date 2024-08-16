@@ -11,11 +11,12 @@
 
 ### PURPOSE
 
-The purpose of this worload was to effectively automate the process of deploying an application using the AWS CLI.
-
+The purpose of this worload was to effectively automate the process of deploying a web application using the AWS CLI, Jenkins and Elastic Beanstalk. Once the code was built and test and Jenkins, it was automatically deployed in the deploy stage.
 
 
 ### The "STEPS" taken (and why each was necessary/important)
+
+The steps involved using GitHub which is useful for version control, creating access keys for secure interaction with AWS services. Writing resource script ensures that we are not deploying while the system is already over the threshold to avoid system disruption. We used Jenkins for continous integration and deployment. We used AWS CLI and EB CLI on Jenkins to automate the deploy stage and configuring the environment for deployment. We documented each step for future reference and clarity on issues and the entire process.
 
 1. First Step, add all source code into GitHub Repository
 
@@ -37,7 +38,7 @@ The purpose of this worload was to effectively automate the process of deploying
 
 ## Access Keys
 
-Access keys are credentials used to authenticate and authorize users or applications to interact with services. 
+Access keys are credentials used to authenticate and authorize users or applications to interact with services. They allow Jenkins and other tools to interact with AWS.
 
 ### Why Sharing Access Keys is Dangerous:
    a. Unauthorized Access: If someone has your access keys, unauthorized person can also access your resources
@@ -211,11 +212,20 @@ If the pipeline sucessfully completes, navigate to AWS Elastic Beanstalk in the 
     
 ### "ISSUES/TROUBLESHOOTING"
 
-While Deploying the application using elastic beanstalk, we got an error of 502 bad gateway. Upon looking at the code that was uploaded in the Elastic Beanstalk, we realized the zipped file downloaded from github has a parent folder. So we zipped it again with only the files and reuploaded it to beanstalk and the application ran successfully.
+Initially while selecting Access Key, I needed to look forward in the steps to understand which one to use. It could either be CLI or Third Party in my opinion. I used CLI as we were focusing on making use of AWS CLI to automate the deployment of our code. But we could also use Third Party as we are also using Jenkins to deploy it.
 
-I had initally created a develop branch in my GitHub and when I tried to deploy the code, the EC2 crashed and I was unable to restart. I terminated the EC2 and created a new EC2. I also deleted the develop branch and only deployed the main branch and it ran successfully.
+While Creating multibranch pipeline for Jenkins I got an error as I missed to validate the GitHub URL. Proper validation is required before creating the branch.
+
+While running the unzip command, I had to install unzip as it was not originally install in my repo.
+
+When I added the Deploy stage in Jenkins file, I was unsure what the environment name meant. I assumed that it was related to Jenkins so I added "dev" as env name which I had given in my multibranch pipeline. My pipeline failed with error saying that it has to be atleast 4 characters. Finally I realized that it was the name of the environment that we want to give for our elastic beanstalk as we are using eb create.
+
 
 ### "OPTIMIZATION'
+
+Using AWS CLI to manage multiple environment can become hectic as we are configuring a lot of env names and configurations manually. 
+
+Since the code is deployed immediately after the test stage, we need to make sure that test stage fulfills all the required testing for the code to be deployed successfully.
 
 Using managed services like elastic beanstalk can be very helpful to companies that do not have a large team. AWS takes care of scalibility, security and reliability of the application so that the developers can focus on the functional aspect of the software.
 
@@ -229,5 +239,5 @@ To resolve such issues we can also use custom scripts/Infrastructure as Code too
     
 ## "CONCLUSION"
 
-In a nutshell, this workload gave hands on practice to deploy a live application with few steps. We also learned about managed services in AWS and their advantages as well as disadvantage which was very beneficial.	
+In a nutshell, this workload made the deployment process smooth by implementing continous deployment. As it did not require manual intervention for deploying the app, the application can reach the clients faster. However we need to ensure proper testing is done so that we are deploying what is intended.
 
